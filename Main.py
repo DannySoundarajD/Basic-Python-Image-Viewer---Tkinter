@@ -6,6 +6,7 @@ root.title("Image viewer")
 root.iconbitmap("spidy.ico")
 root.configure(bg="black")
 
+
 img_1 = ImageTk.PhotoImage(Image.open("spidy1.jpeg"))
 img_2 = ImageTk.PhotoImage(Image.open("spidy2.jpeg"))
 img_3 = ImageTk.PhotoImage(Image.open("spidy3.jpeg"))
@@ -15,7 +16,12 @@ img_5 = ImageTk.PhotoImage(Image.open("spidy5.jpg"))
 img_list = [img_1,img_2,img_3,img_4,img_5]
 
 my_label = Label(image=img_1)
+x = len(img_list)
+status = Label(root, text="Image 1 of " + str(x), bd=1, relief=SUNKEN,anchor = E)
+
 my_label.grid(row=1, column=1, columnspan=3)
+
+
 
 def Forward(fo_num):
     global my_label
@@ -28,12 +34,13 @@ def Forward(fo_num):
     my_label.grid(row=1, column=1, columnspan=3)
     button_back = Button(root, text="previous",command=lambda :back(fo_num-1))
     button_exit = Button(root, text="Exit", command=root.quit)
-    button_front = Button(root, text="Next", command=lambda: Forward(fo_num+1))
+    button_front = Button(root, text="Next   ", command=lambda: Forward(fo_num+1))
+    y = fo_num+1
+    status = Label(root, text="Image "+ str(y)+" of " + str(x),bd=1,relief=SUNKEN,anchor = E)
+    status.grid(row=6, column=4, columnspan=3,sticky=W+E)
 
-
-
-    if fo_num == 5:
-        button_front = Button(root, text="Next",state=DISABLED)
+    if fo_num == 4:
+        button_front = Button(root, text="Next   ",state=DISABLED)
 
 
     button_back.grid(row=5, column=0)
@@ -51,7 +58,10 @@ def back(fo_num):
     my_label.grid(row=1, column=1, columnspan=3)
     button_back = Button(root, text="previous", command=lambda: back(fo_num - 1))
     button_exit = Button(root, text="Exit", command=root.quit)
-    button_front = Button(root, text="Next", command=lambda: Forward(fo_num + 1))
+    button_front = Button(root, text="Next   ", command=lambda: Forward(fo_num + 1))
+    y = fo_num + 1
+    status = Label(root, text="Image " + str(y) + " of " + str(x), bd=1, relief=SUNKEN, anchor=E)
+    status.grid(row=6, column=4, columnspan=3,sticky=W+E)
 
     if fo_num == 0:
         button_back = Button(root, text="previous", state=DISABLED)
@@ -61,13 +71,16 @@ def back(fo_num):
     button_front.grid(row=5, column=4)
 
 
-button_back = Button(root, text = "previous",command=back,state=DISABLED)
+button_back = Button(root, text = "previous",command= back,state=DISABLED)
 button_exit = Button(root, text="Exit", command=root.quit)
-button_front = Button(root, text="Next",command=lambda : Forward(2))
+button_front = Button(root, text="Next   ",command=lambda : Forward(2))
 
 
 button_back.grid(row = 5, column = 0)
 button_exit.grid(row=5, column=2)
-button_front.grid(row = 5, column = 4)
+button_front.grid(row = 5, column = 4,pady = 10)
+
+status.grid(row = 6,column = 4,columnspan = 3,sticky=W+E)
+
 
 root.mainloop()
